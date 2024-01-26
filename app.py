@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -8,9 +8,12 @@ db = SQLAlchemy(app)
 
 class Book(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(80), nullable=False)
-    author = db.Column(db.String(80), nullable=False)
+    title = db.Column(db.String(100), nullable=False)
+    author = db.Column(db.String(100), nullable=False)
     publication_year = db.Column(db.Integer, nullable=False)
+
+    def __repr__(self):
+        return f'<Book {self.title}>'
 
 @app.before_first_request
 def create_tables():
@@ -36,4 +39,3 @@ def add_book():
 
 if __name__ == '__main__':
     app.run(debug=True)
-
